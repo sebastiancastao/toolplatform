@@ -148,3 +148,16 @@ Thumbs.db
 instance/
 .webassets-cache
 .env
+
+# Security - Google Cloud credentials and sensitive files
+phonic-goods-317118-*.json
+*-credentials.json
+*service-account*.json
+google-credentials.json
+service-account-key.json
+credentials/
+secrets/
+
+# Application logs
+logs/
+*.log
