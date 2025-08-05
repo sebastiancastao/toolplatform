@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Glass Flask{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-10 mx-auto">
+        <div class="jumbotron">
+            <h1 class="display-4">Welcome to Glass Flask ✨</h1>
+            <p class="lead">Experience the elegance of liquid glass design with cutting-edge web technologies.</p>
+            <hr class="my-4" style="border-color: rgba(255, 255, 255, 0.2);">
+            <p>Discover the perfect fusion of minimalistic aesthetics and powerful functionality.</p>
+            <a class="btn btn-light btn-lg" href="{{ url_for('about') }}" role="button">
+                <i class="fas fa-rocket me-2"></i>Explore Features
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5 g-4">
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <i class="fas fa-bolt fa-2x mb-3" style="color: rgba(126, 87, 194, 0.8);"></i>
+                </div>
+                <h5 class="card-title">Lightning Fast</h5>
+                <p class="card-text">Blazing performance with optimized glass morphism effects and smooth animations.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <i class="fas fa-palette fa-2x mb-3" style="color: rgba(59, 130, 246, 0.8);"></i>
+                </div>
+                <h5 class="card-title">Modern Design</h5>
+                <p class="card-text">Cutting-edge liquid glass UI with refractive effects and minimalistic aesthetics.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <i class="fas fa-code fa-2x mb-3" style="color: rgba(34, 197, 94, 0.8);"></i>
+                </div>
+                <h5 class="card-title">Developer Friendly</h5>
+                <p class="card-text">Clean code architecture with RESTful APIs and comprehensive tooling.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-4">
+                    <i class="fas fa-search fa-2x me-3" style="color: rgba(126, 87, 194, 0.8);"></i>
+                    <div>
+                        <h3 class="mb-1">Advanced Search Tool</h3>
+                        <p class="text-muted mb-0">Powerful keyword search integration with Google Sheets</p>
+                    </div>
+                </div>
+                
+                <p class="card-text mb-4">Search for keywords in URLs from your Google Sheets. The tool will intelligently scan each URL in column A and update column C with matching results.</p>
+                
+                <div class="row align-items-end">
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="keywordSource" id="useSheetKeyword" value="sheet" checked>
+                                    <label class="form-check-label" for="useSheetKeyword">
+                                        <i class="fas fa-table me-2"></i>Use Sheet Keyword (Cell D1)
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="keywordSource" id="useCustomKeyword" value="custom">
+                                    <label class="form-check-label" for="useCustomKeyword">
+                                        <i class="fas fa-edit me-2"></i>Custom Keyword
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="customKeywordInput" placeholder="Enter your custom keyword..." disabled>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <button id="searchKeywordBtn" class="btn btn-primary btn-lg w-100">
+                            <i class="fas fa-rocket me-2"></i>Launch Search
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="searchProgress" class="mt-4" style="display: none;">
+                    <div class="progress mb-3">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 100%"></div>
+                    </div>
+                    <div class="text-center">
+                        <i class="fas fa-cog fa-spin me-2"></i>
+                        <span>Analyzing URLs... This may take a few moments.</span>
+                    </div>
+                </div>
+                
+                <div id="searchResults" class="mt-4"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center mb-4">
+                    <i class="fas fa-flask fa-2x me-3" style="color: rgba(34, 197, 94, 0.8);"></i>
+                    <div>
+                        <h3 class="mb-1">API Testing Suite</h3>
+                        <p class="text-muted mb-0">Interactive endpoint testing with real-time responses</p>
+                    </div>
+                </div>
+                
+                <p class="card-text mb-4">Test the application's RESTful API endpoints with beautiful real-time response visualization.</p>
+                
+                <div class="d-flex flex-wrap gap-3 mb-4">
+                    <button id="testApiBtn" class="btn btn-success">
+                        <i class="fas fa-play me-2"></i>Test Hello API
+                    </button>
+                    <button id="testEchoBtn" class="btn btn-info">
+                        <i class="fas fa-echo me-2"></i>Test Echo API
+                    </button>
+                </div>
+                
+                <div id="apiResponse" class="mt-4"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
