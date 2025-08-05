@@ -109,6 +109,7 @@ GlassFlask/
 5. **Add Google Sheets credentials**:
    - Place your `phonic-goods-317118-1353ffa1774d.json` file in the project root
    - Update `.env` with your spreadsheet ID
+   - **⚠️ See [DEPLOYMENT_SECURITY.md](DEPLOYMENT_SECURITY.md) for secure credential handling**
 
 6. **Run the application**:
    ```bash
