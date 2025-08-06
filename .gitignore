@@ -157,6 +157,8 @@ google-credentials.json
 service-account-key.json
 credentials/
 secrets/
+.secure_backup/
+*.backup
 
 # Application logs
 logs/

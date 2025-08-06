@@ -88,19 +88,43 @@ def register_routes(app):
             use_custom = data.get('use_custom', False)
             
             # Configuration from app config
-            CREDENTIALS_FILE = app.config['CREDENTIALS_FILE']
             SPREADSHEET_ID = app.config['SPREADSHEET_ID']
             
-            # Configure Google Sheets connection
-            if not os.path.exists(CREDENTIALS_FILE):
+            # Configure Google Sheets connection using environment variables
+            try:
+                # Build credentials info from environment variables
+                credentials_info = {
+                    "type": "service_account",
+                    "project_id": app.config['GOOGLE_CLOUD_PROJECT_ID'],
+                    "private_key_id": app.config['GOOGLE_CLOUD_PRIVATE_KEY_ID'],
+                    "private_key": app.config['GOOGLE_CLOUD_PRIVATE_KEY'],
+                    "client_email": app.config['GOOGLE_CLOUD_CLIENT_EMAIL'],
+                    "client_id": app.config['GOOGLE_CLOUD_CLIENT_ID'],
+                    "auth_uri": app.config['GOOGLE_CLOUD_AUTH_URI'],
+                    "token_uri": app.config['GOOGLE_CLOUD_TOKEN_URI'],
+                    "auth_provider_x509_cert_url": app.config['GOOGLE_CLOUD_AUTH_PROVIDER_X509_CERT_URL'],
+                    "client_x509_cert_url": app.config['GOOGLE_CLOUD_CLIENT_X509_CERT_URL'],
+                    "universe_domain": app.config['GOOGLE_CLOUD_UNIVERSE_DOMAIN']
+                }
+                
+                # Validate required credentials
+                required_fields = ['project_id', 'private_key', 'client_email']
+                missing_fields = [field for field in required_fields if not credentials_info.get(field)]
+                if missing_fields:
+                    return jsonify({
+                        'status': 'error',
+                        'message': f'Missing required Google Cloud credentials: {", ".join(missing_fields)}'
+                    }), 400
+                
+                scope = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
+                creds = Credentials.from_service_account_info(credentials_info, scopes=scope)
+                client = gspread.authorize(creds)
+                
+            except Exception as e:
                 return jsonify({
                     'status': 'error',
-                    'message': 'Google Sheets credentials file not found'
+                    'message': f'Failed to initialize Google Cloud credentials: {str(e)}'
                 }), 400
-                
-            scope = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/drive']
-            creds = Credentials.from_service_account_file(CREDENTIALS_FILE, scopes=scope)
-            client = gspread.authorize(creds)
             
             # Open spreadsheet
             sheet = client.open_by_key(SPREADSHEET_ID).sheet1

@@ -8,8 +8,19 @@ class Config:
     """Base configuration class"""
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'dev-secret-key-change-in-production'
     
+    # Google Cloud Service Account configuration
+    GOOGLE_CLOUD_PROJECT_ID = os.environ.get('GOOGLE_CLOUD_PROJECT_ID')
+    GOOGLE_CLOUD_PRIVATE_KEY_ID = os.environ.get('GOOGLE_CLOUD_PRIVATE_KEY_ID')
+    GOOGLE_CLOUD_PRIVATE_KEY = os.environ.get('GOOGLE_CLOUD_PRIVATE_KEY')
+    GOOGLE_CLOUD_CLIENT_EMAIL = os.environ.get('GOOGLE_CLOUD_CLIENT_EMAIL')
+    GOOGLE_CLOUD_CLIENT_ID = os.environ.get('GOOGLE_CLOUD_CLIENT_ID')
+    GOOGLE_CLOUD_AUTH_URI = os.environ.get('GOOGLE_CLOUD_AUTH_URI') or 'https://accounts.google.com/o/oauth2/auth'
+    GOOGLE_CLOUD_TOKEN_URI = os.environ.get('GOOGLE_CLOUD_TOKEN_URI') or 'https://oauth2.googleapis.com/token'
+    GOOGLE_CLOUD_AUTH_PROVIDER_X509_CERT_URL = os.environ.get('GOOGLE_CLOUD_AUTH_PROVIDER_X509_CERT_URL') or 'https://www.googleapis.com/oauth2/v1/certs'
+    GOOGLE_CLOUD_CLIENT_X509_CERT_URL = os.environ.get('GOOGLE_CLOUD_CLIENT_X509_CERT_URL')
+    GOOGLE_CLOUD_UNIVERSE_DOMAIN = os.environ.get('GOOGLE_CLOUD_UNIVERSE_DOMAIN') or 'googleapis.com'
+    
     # Google Sheets configuration
-    CREDENTIALS_FILE = os.environ.get('CREDENTIALS_FILE') or 'phonic-goods-317118-1353ffa1774d.json'
     SPREADSHEET_ID = os.environ.get('SPREADSHEET_ID') or '1BJpXRY7WZ7K0IE7sOpXSC-0-k7cBk1Z-w8PqbdxJvpY'
     
     # Request settings

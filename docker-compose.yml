@@ -8,15 +8,26 @@ services:
     environment:
       - FLASK_ENV=production
       - SECRET_KEY=${SECRET_KEY:-your-super-secret-key-change-in-production}
-      - CREDENTIALS_FILE=phonic-goods-317118-1353ffa1774d.json
+      # Google Cloud Service Account Configuration (Set these in your .env file)
+      - GOOGLE_CLOUD_PROJECT_ID=${GOOGLE_CLOUD_PROJECT_ID}
+      - GOOGLE_CLOUD_PRIVATE_KEY_ID=${GOOGLE_CLOUD_PRIVATE_KEY_ID}
+      - GOOGLE_CLOUD_PRIVATE_KEY=${GOOGLE_CLOUD_PRIVATE_KEY}
+      - GOOGLE_CLOUD_CLIENT_EMAIL=${GOOGLE_CLOUD_CLIENT_EMAIL}
+      - GOOGLE_CLOUD_CLIENT_ID=${GOOGLE_CLOUD_CLIENT_ID}
+      - GOOGLE_CLOUD_AUTH_URI=${GOOGLE_CLOUD_AUTH_URI:-https://accounts.google.com/o/oauth2/auth}
+      - GOOGLE_CLOUD_TOKEN_URI=${GOOGLE_CLOUD_TOKEN_URI:-https://oauth2.googleapis.com/token}
+      - GOOGLE_CLOUD_AUTH_PROVIDER_X509_CERT_URL=${GOOGLE_CLOUD_AUTH_PROVIDER_X509_CERT_URL:-https://www.googleapis.com/oauth2/v1/certs}
+      - GOOGLE_CLOUD_CLIENT_X509_CERT_URL=${GOOGLE_CLOUD_CLIENT_X509_CERT_URL}
+      - GOOGLE_CLOUD_UNIVERSE_DOMAIN=${GOOGLE_CLOUD_UNIVERSE_DOMAIN:-googleapis.com}
+      # Google Sheets Configuration
       - SPREADSHEET_ID=${SPREADSHEET_ID:-1BJpXRY7WZ7K0IE7sOpXSC-0-k7cBk1Z-w8PqbdxJvpY}
+      # Request Configuration
       - REQUEST_TIMEOUT=30
       - MAX_WORKERS=2
       - MIN_DELAY=1.0
       - MAX_DELAY=3.0
     volumes:
       - ./logs:/app/logs
-      - ./phonic-goods-317118-1353ffa1774d.json:/app/phonic-goods-317118-1353ffa1774d.json:ro
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000/"]

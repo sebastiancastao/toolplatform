@@ -38,8 +38,7 @@ GlassFlask/
 ├── 📱 Application Files
 │   ├── app.py                          # Main Flask application
 │   ├── config.py                       # Configuration management
-│   ├── wsgi.py                        # WSGI entry point
-│   └── phonic-goods-317118-*.json     # Google Sheets credentials
+│   └── wsgi.py                        # WSGI entry point
 │
 ├── 🎨 Frontend
 │   ├── templates/
@@ -106,9 +105,10 @@ GlassFlask/
    cp env.example .env
    ```
 
-5. **Add Google Sheets credentials**:
-   - Place your `phonic-goods-317118-1353ffa1774d.json` file in the project root
-   - Update `.env` with your spreadsheet ID
+5. **Configure Google Cloud credentials** (Environment Variables):
+   - **Important**: This application now uses environment variables instead of JSON files for security
+   - Copy the Google Cloud service account details to your `.env` file
+   - Set all required `GOOGLE_CLOUD_*` environment variables (see Environment Variables section)
    - **⚠️ See [DEPLOYMENT_SECURITY.md](DEPLOYMENT_SECURITY.md) for secure credential handling**
 
 6. **Run the application**:
@@ -331,13 +331,26 @@ gunicorn --bind 0.0.0.0:5000 \
 
 ### 🔐 Environment Variables
 
+For security and deployment flexibility, all credentials are now managed through environment variables:
+
 ```bash
 # Flask Configuration
 FLASK_ENV=production
 SECRET_KEY=your-super-secret-key-here
 
+# Google Cloud Service Account Configuration (Required)
+GOOGLE_CLOUD_PROJECT_ID=your-project-id
+GOOGLE_CLOUD_PRIVATE_KEY_ID=your-private-key-id
+GOOGLE_CLOUD_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYOUR_PRIVATE_KEY_HERE\n-----END PRIVATE KEY-----\n"
+GOOGLE_CLOUD_CLIENT_EMAIL=your-service-account@your-project.iam.gserviceaccount.com
+GOOGLE_CLOUD_CLIENT_ID=your-client-id
+GOOGLE_CLOUD_AUTH_URI=https://accounts.google.com/o/oauth2/auth
+GOOGLE_CLOUD_TOKEN_URI=https://oauth2.googleapis.com/token
+GOOGLE_CLOUD_AUTH_PROVIDER_X509_CERT_URL=https://www.googleapis.com/oauth2/v1/certs
+GOOGLE_CLOUD_CLIENT_X509_CERT_URL=https://www.googleapis.com/robot/v1/metadata/x509/your-service-account%40your-project.iam.gserviceaccount.com
+GOOGLE_CLOUD_UNIVERSE_DOMAIN=googleapis.com
+
 # Google Sheets Configuration
-CREDENTIALS_FILE=phonic-goods-317118-1353ffa1774d.json
 SPREADSHEET_ID=your-spreadsheet-id
 
 # Performance Configuration
@@ -346,6 +359,13 @@ MAX_WORKERS=2
 MIN_DELAY=1.0
 MAX_DELAY=3.0
 ```
+
+**Security Notes:**
+- ✅ JSON credential files are NO LONGER used for security reasons
+- ✅ All credentials are now environment variables
+- ✅ The private key should be properly escaped with `\n` characters
+- ✅ Original JSON files are automatically ignored by Git
+- ⚠️ Never commit environment files containing real credentials
 
 ## Contributing
 
